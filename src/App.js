@@ -1,6 +1,6 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { lazy, useState, useEffect } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import defaultRouterCfg from "./config/router";
 import { useSelector } from "react-redux";
 import lodash from 'lodash'
@@ -24,7 +24,9 @@ function App() {
 
 	return (
 		<div className="App">
-			<RouterProvider router={router} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <RouterProvider router={router} />
+      </Suspense>
 		</div>
 	);
 }
