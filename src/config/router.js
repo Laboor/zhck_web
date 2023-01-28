@@ -7,7 +7,6 @@ const router = [
   {
     element: <Layout />,
     loader: () => {
-      console.log('loader1');
       return '页面加载了';
     },
     children: [
@@ -15,10 +14,10 @@ const router = [
         path: '/',
         element: <Home />,
       },
-      {
-        path: '/about',
-        element: <About />,
-      },
+      // {
+      //   path: '/about',
+      //   element: <About />,
+      // },
     ],
   },
   {
