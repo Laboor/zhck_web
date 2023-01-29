@@ -1,18 +1,23 @@
+import { useState, useRef, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, incrementByAmount } from "../../store/modules/counter";
 
-function Home() {
-	const dispatch = useDispatch();
+function Home(props) {
+	console.log('子组件刷新了', props);
+	const [count, setCount] = useState(0);
+	const memoCount = useMemo(() => {
+		return count + 100;
+	}, [count]);
 
 	return (
 		<div>
 			Hello World
 			<button
 				onClick={() => {
-					dispatch(incrementByAmount(50));
+					setCount(count + 1);
 				}}
 			>
-				increment
+				{count}|{memoCount}
 			</button>
 		</div>
 	);

@@ -14,13 +14,7 @@ function App() {
      route.element = <Module />;
 		 routerCfg[0].children.push(route);
 	}
-  console.log(routerCfg);
-	// const [routerCfg, setRouterCfg] = useState(defaultRouterCfg);
 	const router = createBrowserRouter(routerCfg);
-
-	// useEffect(() => {
-	//   setRouterCfg(routerCfg);
-	// }, [routerCfg]);
 
 	return (
 		<div className="App">

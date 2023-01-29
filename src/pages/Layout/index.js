@@ -1,22 +1,16 @@
-import { useState, useEffect, useTransition } from 'react';
+import { useState, useEffect, useTransition, memo, useCallback } from 'react';
 import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { decrement, incrementByAmount } from '../../store/modules/counter';
 import { setAsyncRoute } from '../../store/modules/asyncRoute';
+import Home from '../Home';
 
 function Layout() {
-  const [isPending, startTransition] = useTransition();
-  const count = useSelector((state) => state.counter.value);
+  console.log('父组件刷新了');
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [flag, setFlag] = useState(true);
+  const fun = useCallback(() => console.log('传入子组件的函数'), []);
 
-  let [flag, setFlag] = useState(99);
-
-  useEffect(() => {
-    console.log(flag);
-  }, [flag]);
-
-  console.log('count', count);
 
   return (
     <div style={{ background: 'green', height: '800px' }}>
@@ -36,14 +30,17 @@ function Layout() {
       </button>
       <button
         onClick={() => {
-          navigate('/about');
+          // navigate('/about');
+          setFlag(!flag);
         }}
       >
         decrement
       </button>
-      <Outlet />
+      <Child flag={fun} />
     </div>
   );
 }
+
+const Child = memo((prop) => <Home flag={prop.flag}/>);
 
 export default Layout;
