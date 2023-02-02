@@ -1,43 +1,27 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import styles from "./index.module.less";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setAuthRoute } from "@/store/modules/authRouter";
 
 const { layout, header, logo, sider, siderMenu, breadcrumb, content } = styles;
 const { Header, Content, Sider } = Layout;
 
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
-	const key = String(index + 1);
-	return {
-		key: `sub${key}`,
-		// icon: React.createElement(icon),
-		label: `subnav ${key}`,
-		children: new Array(4).fill(null).map((_, j) => {
-			const subKey = index * 4 + j + 1;
-			return {
-				key: subKey,
-				label: `option${subKey}`,
-			};
-		}),
-	};
-});
-
-
-
-
-
 
 function MainLayout() {
-	const routerCfg = useSelector((state) => state.asyncRoute.value);
-	console.log(routerCfg[0]);
-	const menuList = routerCfg[0].children.map((item, index) => {
-		const key = String(index + 1);
-		return {
-			key: key,
-			label: item.meta.title
-		}
-	})
+	// const routerCfg = useSelector((state) => state.asyncRoute.value);
+	// console.log(routerCfg[0]);
+	// const menuList = routerCfg[0].children.map((item, index) => {
+	// 	const key = String(index + 1);
+	// 	return {
+	// 		key: key,
+	// 		label: item.meta.title
+	// 	}
+	// })
+
+	const menuList = useSelector((state) => state.menu.list);
 	console.log(menuList);
 	const {
 		token: { colorBgContainer },
@@ -69,7 +53,7 @@ function MainLayout() {
 							background: colorBgContainer,
 						}}
 					>
-						Content
+						<Outlet />
 					</Content>
 				</Layout>
 			</Layout>

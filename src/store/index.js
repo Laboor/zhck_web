@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './modules/counter';
-import asyncRouteReducer from './modules/asyncRoute';
+import authRouterReducer from './modules/authRouter';
+import menuReducer from './modules/menu';
 
 export default configureStore({
   reducer: {
     counter: counterReducer,
-    asyncRoute: asyncRouteReducer
+    authRouter: authRouterReducer,
+    menu: menuReducer,
   }
 })

@@ -1,30 +1,22 @@
 import styles from "./App.module.less";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Suspense, lazy, useState, useEffect } from "react";
-import defaultRouterCfg from "./config/router";
-import { useSelector, useDispatch } from "react-redux";
-import lodash from "lodash";
+import { Suspense, useState, useEffect } from "react";
+import React from "react";
+import defaultRoute from "./config/defaultRoute";
+import { useSelector } from "react-redux";
 import { ConfigProvider } from "antd";
-import { setAsyncRoute } from "@/store/modules/asyncRoute";
+import { setMenu } from "@/store/modules/menu";
+import { setAuthRoute } from "@/store/modules/authRouter";
 
-const { AppStyle } = styles;
+const { app } = styles;
 
 function App() {
-	const dispatch = useDispatch();
-	let routerCfg = defaultRouterCfg.concat(); // 数组深拷贝
-	dispatch(setAsyncRoute(routerCfg));
-
-	// const asyncRoute = useSelector((state) => state.asyncRoute.value);
-	// let asyncRouteCfg = lodash.cloneDeep(asyncRoute);
-	// for (let route of asyncRouteCfg) {
-	// 	const Module = lazy(() => import("./pages/About"));
-	// 	route.element = <Module />;
-	// 	routerCfg[0].children.push(route);
-	// }
+	const authRoute = useSelector((state) => state.authRouter.list);
+	const routerCfg = defaultRoute.appendRoute(authRoute);
 	const router = createBrowserRouter(routerCfg);
 
 	return (
-		<div className={AppStyle}>
+		<div className={app}>
 			<Suspense fallback={<div>Loading...</div>}>
 				<RouterProvider router={router} />
 			</Suspense>

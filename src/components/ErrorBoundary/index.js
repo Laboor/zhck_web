@@ -11,10 +11,10 @@ import { FrownOutlined } from "@ant-design/icons";
 import { Result, Button } from "antd";
 import styles from "./index.module.less";
 
-const { ErrorBoundaryWapperStyle } = styles;
+const { errorBoundaryWapper } = styles;
 
 function ErrorBoundaryWapper(props) {
-	return <div className={ErrorBoundaryWapperStyle}>{props.children}</div>;
+	return <div className={errorBoundaryWapper}>{props.children}</div>;
 }
 
 class ErrorBoundary extends React.Component {
