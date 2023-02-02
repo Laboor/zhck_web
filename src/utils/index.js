@@ -21,3 +21,22 @@ export function convertToReactRoute(routes) {
 	}
 	return routeList;
 }
+
+// 将路由转化为菜单
+export function convertToMenu(routes) {
+  const menuList = [];
+  const routesClone = lodash.cloneDeep(routes);
+  for (const route of routesClone) {
+    const menu = {
+      key: '',
+      label: route.meta.title,
+      icon: route.meta.icon,
+      element: route.element
+    }
+    if (route.children) {
+			menu.children = convertToMenu(route.children);
+		}
+    menuList.push(menu);
+  }
+  return menuList
+}
