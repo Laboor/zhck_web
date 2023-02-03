@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import styles from "./index.module.less";
 import { useSelector, useDispatch } from "react-redux";
 import { setAuthRoute } from "@/store/modules/authRouter";
+import { MenuContext } from "@/App";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const { layout, header, logo, sider, siderMenu, breadcrumb, content } = styles;
 const { Header, Content, Sider } = Layout;
-
 
 function MainLayout() {
 	// const routerCfg = useSelector((state) => state.asyncRoute.value);
@@ -20,6 +21,9 @@ function MainLayout() {
 	// 		label: item.meta.title
 	// 	}
 	// })
+	const MenuCfg = useContext(MenuContext);
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	const menuList = useSelector((state) => state.menu.list);
 	console.log(menuList);
@@ -39,7 +43,20 @@ function MainLayout() {
 						background: colorBgContainer,
 					}}
 				>
-					<Menu className={siderMenu} mode="inline" defaultSelectedKeys={["1"]} defaultOpenKeys={["sub1"]} items={menuList} />
+					<Menu
+						className={siderMenu}
+						mode="inline"
+						defaultSelectedKeys={["1"]}
+						defaultOpenKeys={["sub1"]}
+						items={MenuCfg}
+						onClick={({ keyPath }) => {
+							const routePath = keyPath.reverse().join("/");
+							console.log(location.pathname, routePath);
+							if (location.pathname !== routePath) {
+								navigate(routePath);
+							}
+						}}
+					/>
 				</Sider>
 				<Layout style={{ background: "#eff1f4" }}>
 					<Breadcrumb className={breadcrumb}>
@@ -54,6 +71,9 @@ function MainLayout() {
 						}}
 					>
 						<Outlet />
+						{/* <Suspense>
+							<Outlet />
+						</Suspense> */}
 					</Content>
 				</Layout>
 			</Layout>

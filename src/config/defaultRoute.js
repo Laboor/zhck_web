@@ -8,17 +8,24 @@ import { convertToReactRoute } from "@/utils";
 const defaultRoute = [
 	{
 		element: <MainLayout />,
-		isLayout: true,
+		isRoot: true,
 		children: [
 			{
 				path: "/",
 				element: <Home />,
-				meta: { title: "首页" },
+				meta: { title: "首页", hiddenInMenu: true },
 			},
 			{
 				path: "/about",
 				element: <About />,
 				meta: { title: "公安“点对点”执行系统" },
+				children: [
+					{
+						path: "about10",
+						element: <About />,
+						meta: { title: "法院“总对总”执行系统123" },
+					},
+				],
 			},
 			// {
 			//   path: '/about1',
@@ -60,12 +67,12 @@ const defaultRoute = [
 defaultRoute.appendRoute = function (authRoute) {
 	let defaultRouteClone = lodash.cloneDeep(defaultRoute);
 	defaultRouteClone.forEach((route) => {
-		if (route.isLayout) {
+		if (route.isRoot) {
 			let reactAuthRoute = convertToReactRoute(authRoute);
 			route.children = route.children.concat(reactAuthRoute);
 		}
 	});
 	return defaultRouteClone;
-}
+};
 
 export default defaultRoute;
