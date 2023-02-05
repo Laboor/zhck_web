@@ -14,7 +14,6 @@ function Home(props) {
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	console.log(defaultRoute);
 
 
 	return (

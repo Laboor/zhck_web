@@ -6,6 +6,8 @@ import store from "./store";
 import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
 
+require('@/mock');
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>

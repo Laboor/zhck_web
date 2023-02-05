@@ -3,11 +3,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Suspense, useState, useEffect } from "react";
 import React from "react";
 import defaultRoute from "./config/defaultRoute";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { convertToMenu } from "@/utils";
-import { ConfigProvider } from "antd";
-import { setMenu } from "@/store/modules/menu";
-import { setAuthRoute } from "@/store/modules/authRouter";
+import { userLogin } from "@/store/modules/user";
+import axios from '@/axios';
+
 
 const { app } = styles;
 
@@ -18,11 +18,15 @@ function getRootRouteChildren(routes) {
 }
 
 function App() {
+  const dispatch = useDispatch();
 	const authRoute = useSelector((state) => state.authRouter.list);
 	const routerCfg = defaultRoute.appendRoute(authRoute);
 	const router = createBrowserRouter(routerCfg);
 	const menuCfg = convertToMenu(getRootRouteChildren(routerCfg));
-	console.log(menuCfg);
+  
+  useEffect(() => {
+    dispatch(userLogin('john'));
+  })
 
 	return (
 		<div className={app}>

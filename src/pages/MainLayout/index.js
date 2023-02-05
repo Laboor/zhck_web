@@ -25,8 +25,6 @@ function MainLayout() {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	const menuList = useSelector((state) => state.menu.list);
-	console.log(menuList);
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
@@ -70,10 +68,9 @@ function MainLayout() {
 							background: colorBgContainer,
 						}}
 					>
-						<Outlet />
-						{/* <Suspense>
+						<Suspense>
 							<Outlet />
-						</Suspense> */}
+						</Suspense>
 					</Content>
 				</Layout>
 			</Layout>
