@@ -4,7 +4,6 @@ import { LaptopOutlined, NotificationOutlined, UserOutlined } from "@ant-design/
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import styles from "./index.module.less";
 import { useSelector, useDispatch } from "react-redux";
-import { setAuthRoute } from "@/store/modules/authRouter";
 import { MenuContext } from "@/App";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -12,15 +11,6 @@ const { layout, header, logo, sider, siderMenu, breadcrumb, content } = styles;
 const { Header, Content, Sider } = Layout;
 
 function MainLayout() {
-	// const routerCfg = useSelector((state) => state.asyncRoute.value);
-	// console.log(routerCfg[0]);
-	// const menuList = routerCfg[0].children.map((item, index) => {
-	// 	const key = String(index + 1);
-	// 	return {
-	// 		key: key,
-	// 		label: item.meta.title
-	// 	}
-	// })
 	const MenuCfg = useContext(MenuContext);
 	const navigate = useNavigate();
 	const location = useLocation();

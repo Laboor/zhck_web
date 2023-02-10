@@ -4,25 +4,42 @@ import About from "@/pages/About";
 import Login from "@/pages/Login";
 import lodash from "lodash";
 import { convertToReactRoute } from "@/utils";
+import RequireAuth from "@/components/RequireAuth";
 
 const defaultRoute = [
 	{
-		element: <MainLayout />,
+		element: (
+			<RequireAuth>
+				<MainLayout />
+			</RequireAuth>
+		),
 		isRoot: true,
 		children: [
 			{
 				path: "/",
-				element: <Home />,
+				element: (
+					<RequireAuth>
+						<Home />
+					</RequireAuth>
+				),
 				meta: { title: "首页", hiddenInMenu: true },
 			},
 			{
 				path: "/about",
-				element: <About />,
+				element: (
+					<RequireAuth>
+						<About />
+					</RequireAuth>
+				),	
 				meta: { title: "公安“点对点”执行系统" },
 				children: [
 					{
 						path: "about10",
-						element: <About />,
+						element: (
+							<RequireAuth>
+								<About />
+							</RequireAuth>
+						),
 						meta: { title: "法院“总对总”执行系统123" },
 					},
 				],
