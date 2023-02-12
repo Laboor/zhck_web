@@ -1,48 +1,51 @@
-import { useState, useEffect, useContext, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import api from "@/config/api";
-import axios from "@/axios";
-import { refreshTokenAuthTime, clearUserInfo } from "@/store/modules/userInfo";
-import { GlobalMessageContext } from "@/App";
+import { useState, useEffect, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import api from '@/config/api';
+import axios from '@/axios';
+import { GlobalMessageContext } from '@/App';
+import { clearUserInfo } from '@/store/modules/userInfo';
+import { Spin } from 'antd';
+import styles from './index.module.less';
 
-const authTimeInterval = 5 * 60 * 1000; // 5分钟
+const { blankPage } = styles;
 
 function RequireAuth(props) {
-	console.log(333333333333);
-	const [hasAuth, setHasAuth] = useState(false);
-	const tokenAuthTime = useSelector((state) => state.userInfo.tokenAuthTime);
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	const message = useContext(GlobalMessageContext);
+  const [hasAuth, setHasAuth] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const message = useContext(GlobalMessageContext);
 
-	useEffect(() => {
-		if (Date.now() - tokenAuthTime > authTimeInterval) {
-			axios
-				.get(api.authVerification, {
-					// params: {
-					// 	token: token,
-					// },
-				})
-				.then((res) => {
-					if (res.data.verify) {
-						setHasAuth(true);
-						dispatch(refreshTokenAuthTime());
-					} else {
-						setHasAuth(false);
-						dispatch(clearUserInfo());
-						message.open({
-							type: "error",
-							content: "登录权限过期，请重新登录！",
-						});
-						navigate("/login", { replace: true });
-					}
-				});
-		} else {
-			setHasAuth(true);
-		}
-	}, []);
-	return hasAuth ? props.children : null;
+  useEffect(() => {
+    axios
+      .get(api.authVerification, {
+        // params: {
+        // 	token: token,
+        // },
+      })
+      .then((res) => {
+        if (res.data.verify) {
+          setHasAuth(true);
+        } else {
+          setHasAuth(false);
+          dispatch(clearUserInfo());
+          message.open({
+            type: 'error',
+            content: '登录权限过期，请重新登录！',
+          });
+          
+          navigate('/login', { replace: true });
+        }
+      });
+  }, [hasAuth, message, navigate, dispatch]);
+
+  return hasAuth ? (
+    props.children
+  ) : (
+    <div className={blankPage}>
+      <Spin tip="Loading" size="large" delay={100} />
+    </div>
+  );
 }
 
 export default RequireAuth;
