@@ -1,5 +1,5 @@
 const data = {
-	verify: false,
+	verify: true,
 };
 
 export default data;

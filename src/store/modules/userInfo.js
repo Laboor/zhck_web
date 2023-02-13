@@ -11,12 +11,8 @@ export const userInfo = createSlice({
     token: '',
     role: '',
     authRoute: [],
-    tokenAuthTime: '',
   },
   reducers: {
-    refreshTokenAuthTime: (state) => {
-      state.tokenAuthTime = Date.now();
-    },
     clearUserInfo: (state) => {
       state.id = '';
       state.name = '';
@@ -24,7 +20,6 @@ export const userInfo = createSlice({
       state.token = '';
       state.role = '';
       state.authRoute = '';
-      state.tokenAuthTime = '';
     },
   },
   extraReducers(builder) {
@@ -40,7 +35,9 @@ export const userInfo = createSlice({
         state.token = res.token;
         state.role = res.role;
         state.authRoute = res.authRoute;
-        state.tokenAuthTime = Date.now();
+				// 将用户信息存储在本地
+				const localUserInfo = JSON.stringify(state);
+				localStorage.setItem('userInfo', localUserInfo);
       })
       .addCase(userLogin.rejected, (state, action) => {
         state.loginStatus = 'failed';
@@ -61,6 +58,6 @@ export const userLogout = createAsyncThunk('userLogout', async (userId) => {
   return res.data;
 });
 
-export const { refreshTokenAuthTime, clearUserInfo } = userInfo.actions;
+export const { clearUserInfo } = userInfo.actions;
 
 export default userInfo.reducer;
