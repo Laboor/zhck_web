@@ -16,9 +16,8 @@ function RequireAuth(props) {
 	const dispatch = useDispatch();
 	const message = useContext(GlobalMessageContext);
 
+  // TODO...将withToken逻辑移动到此处
 	useEffect(() => {
-		const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-		console.log(userInfo);
 		axios
 			.get(api.authVerification, {
 				// params: {
@@ -29,8 +28,8 @@ function RequireAuth(props) {
 				if (res.data.verify) {
 					setHasAuth(true);
 				} else {
-					setHasAuth(false);
 					localStorage.removeItem("userInfo");
+          setHasAuth(false);
 					dispatch(clearUserInfo());
 					message.open({
 						type: "error",
