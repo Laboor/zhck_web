@@ -1,10 +1,29 @@
 .loginPage {
 	position: relative;
 	display: flex;
+  flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
 	height: 100%;
+  background-color: #f0f2f5;
+  background-image: url(../../assets/img/login_background.svg);
+  background-size: 100% 100%;
+
+  .sysTitle {
+    .logo {
+      vertical-align: bottom;
+      margin-right: 20px;
+    }
+
+    position: relative;
+    display: inline;
+    vertical-align:bottom;
+    top: -60px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #3d3e40e0;
+  }
 
 	.loginForm {
 		position: relative;
