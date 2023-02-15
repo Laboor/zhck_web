@@ -13,6 +13,9 @@ export const userInfo = createSlice({
     authRoute: [],
   },
   reducers: {
+		setAuthRoute: (state, action) => {
+			state.authRoute = action.payload;
+		},
     clearUserInfo: (state) => {
       state.id = '';
       state.name = '';
@@ -58,6 +61,6 @@ export const userLogout = createAsyncThunk('userLogout', async (userId) => {
   return res.data;
 });
 
-export const { clearUserInfo } = userInfo.actions;
+export const { setAuthRoute, clearUserInfo } = userInfo.actions;
 
 export default userInfo.reducer;
