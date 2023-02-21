@@ -2,11 +2,11 @@ import styles from './index.module.less';
 import gznxLogo from '@/assets/img/gzrc_logo.png';
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { userLogin } from '@/store/modules/userInfo';
 import { useNavigate } from 'react-router-dom';
-import { GlobalMessageContext } from '@/App';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { userLogin } from '@/store/modules/userInfo';
 import { Button, Checkbox, Form, Input } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { GlobalMessageContext } from '@/App';
 
 const { loginPage, sysTitle, logo, loginForm, forgetPwd } = styles;
 

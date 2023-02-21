@@ -1,11 +1,12 @@
-import React, { useContext, Suspense } from "react";
-import { Outlet } from "react-router-dom";
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
 import styles from "./index.module.less";
+import React, { useContext, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { LaptopOutlined, NotificationOutlined, UserOutlined } from "@ant-design/icons";
+import HeaderContent from '@/components/HeaderContent';
 import { MenuContext } from "@/App";
-import { useNavigate, useLocation } from "react-router-dom";
+
 
 const { layout, header, logo, sider, siderMenu, breadcrumb, content } = styles;
 const { Header, Content, Sider } = Layout;
@@ -22,6 +23,7 @@ function MainLayout() {
 		<Layout className={layout}>
 			<Header className={header}>
 				<div className={logo} />
+        <HeaderContent></HeaderContent>
 			</Header>
 			<Layout>
 				<Sider

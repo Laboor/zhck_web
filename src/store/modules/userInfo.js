@@ -13,9 +13,13 @@ export const userInfo = createSlice({
     authRoute: [],
   },
   reducers: {
-		setAuthRoute: (state, action) => {
-			state.authRoute = action.payload;
-		},
+    updateUserInfo: (state, action) => {
+      for (let key in action.payload) {
+        if (state.hasOwnProperty(key)) {
+          state[key] = action.payload[key];
+        }
+      }
+    },
     clearUserInfo: (state) => {
       state.id = '';
       state.name = '';
@@ -38,9 +42,9 @@ export const userInfo = createSlice({
         state.token = res.token;
         state.role = res.role;
         state.authRoute = res.authRoute;
-				// 将用户信息存储在本地
-				const localUserInfo = JSON.stringify(state);
-				localStorage.setItem('userInfo', localUserInfo);
+        // 将用户信息存储在本地
+        const localUserInfo = JSON.stringify(state);
+        localStorage.setItem('userInfo', localUserInfo);
       })
       .addCase(userLogin.rejected, (state, action) => {
         state.loginStatus = 'failed';
@@ -61,6 +65,6 @@ export const userLogout = createAsyncThunk('userLogout', async (userId) => {
   return res.data;
 });
 
-export const { setAuthRoute, clearUserInfo } = userInfo.actions;
+export const { updateUserInfo, clearUserInfo } = userInfo.actions;
 
 export default userInfo.reducer;

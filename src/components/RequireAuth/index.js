@@ -2,7 +2,7 @@ import styles from './index.module.less';
 import { useState, useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { clearUserInfo } from '@/store/modules/userInfo';
+import { updateUserInfo, clearUserInfo } from '@/store/modules/userInfo';
 import { Spin } from 'antd';
 import axios from '@/axios';
 import cryptoJS from 'crypto-js';
@@ -12,10 +12,9 @@ import { GlobalMessageContext } from '@/App';
 const { blankPage } = styles;
 
 // 获取用户Token
-function getUserToken() {
+function getUserToken(userInfo) {
   let userToken = null;
   // 从localStorage获取路由
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   if (userInfo && userInfo.token) {
     const tokenArr = userInfo.token.split('.');
     // 是否有效的JWT格式
@@ -37,6 +36,7 @@ function RequireAuth(props) {
   const [hasAuth, setHasAuth] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
   useEffect(() => {
     if (hasAuth) return;
@@ -44,12 +44,14 @@ function RequireAuth(props) {
     axios
       .get(api.authVerification, {
         headers: {
-          Authorization: getUserToken(),
+          Authorization: getUserToken(userInfo),
         },
       })
       .then((res) => {
         if (res.data.verify) {
           // 校验成功
+          //TODO..判断state是否为空
+          dispatch(updateUserInfo(userInfo));
           setHasAuth(true);
         } else {
           // 校验失败
@@ -64,7 +66,7 @@ function RequireAuth(props) {
           navigate('/login', { replace: true });
         }
       });
-  }, [hasAuth, message, navigate, dispatch]);
+  }, [userInfo, hasAuth, message, navigate, dispatch]);
 
   return hasAuth ? (
     props.children

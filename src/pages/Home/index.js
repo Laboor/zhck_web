@@ -13,7 +13,7 @@ function Home(props) {
 		<div>
 			Hello World
 			<button onClick={() => {
-				navigate('/about3');
+				navigate('/login');
 			}}>111</button>
 		</div>
 	);

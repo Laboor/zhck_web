@@ -1,11 +1,10 @@
 import styles from './App.module.less';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Suspense, useState, useEffect } from 'react';
-import React from 'react';
-import defaultRoute from './config/defaultRoute';
+import React, { Suspense, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { convertToMenu } from '@/utils';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { message } from 'antd';
+import defaultRoute from './config/defaultRoute';
+import { convertToMenu } from '@/utils';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 const { app } = styles;

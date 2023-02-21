@@ -11,10 +11,10 @@ import { FrownOutlined } from '@ant-design/icons';
 import { Result, Button } from 'antd';
 import styles from './index.module.less';
 
-const { errorBoundaryWapper } = styles;
+const { errorBoundaryWrapper } = styles;
 
-function ErrorBoundaryWapper(props) {
-  return <div className={errorBoundaryWapper}>{props.children}</div>;
+function ErrorBoundaryWrapper(props) {
+  return <div className={errorBoundaryWrapper}>{props.children}</div>;
 }
 
 class ErrorBoundary extends React.Component {
@@ -35,16 +35,16 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       if (this.props.element) {
-        return <ErrorBoundaryWapper>{this.props.element}</ErrorBoundaryWapper>;
+        return <ErrorBoundaryWrapper>{this.props.element}</ErrorBoundaryWrapper>;
       }
       return (
-        <ErrorBoundaryWapper>
+        <ErrorBoundaryWrapper>
           <Result
             icon={<FrownOutlined style={{ color: '#ef9c36' }} />}
             title="很抱歉，发生了未知错误"
             extra={<Button type="primary">返回首页</Button>}
           />
-        </ErrorBoundaryWapper>
+        </ErrorBoundaryWrapper>
       );
     }
     return this.props.children;
