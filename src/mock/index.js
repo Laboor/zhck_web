@@ -1,5 +1,6 @@
 import Mock from 'mockjs';
 import login from './data/login';
+import logout from './data/logout';
 import authVerification from './data/authVerification';
 import api from '@/config/api';
 
@@ -11,6 +12,7 @@ Mock.setup({
 // 配置Mock API
 const BASE_URL = 'http://localhost:3000';
 Mock.mock(BASE_URL + api.login, login);
+Mock.mock(BASE_URL + api.logout, logout);
 Mock.mock(BASE_URL + api.authVerification, authVerification);
 
 export default Mock;

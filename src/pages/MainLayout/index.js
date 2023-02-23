@@ -4,9 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from "@ant-design/icons";
-import HeaderContent from '@/components/HeaderContent';
+import HeaderContent from "@/components/HeaderContent";
 import { MenuContext } from "@/App";
-
 
 const { layout, header, logo, sider, siderMenu, breadcrumb, content } = styles;
 const { Header, Content, Sider } = Layout;
@@ -23,7 +22,7 @@ function MainLayout() {
 		<Layout className={layout}>
 			<Header className={header}>
 				<div className={logo} />
-        <HeaderContent></HeaderContent>
+				<HeaderContent></HeaderContent>
 			</Header>
 			<Layout>
 				<Sider
