@@ -11,10 +11,9 @@ import { GlobalMessageContext } from "@/App";
 const { loginPage, sysTitle, logo, loginForm, forgetPwd } = styles;
 
 function Login() {
-  console.log('login');
-	const [isLogging, setIsLogging] = useState(false);
   const { getState } = useStore();
 	const hasAuth = getState().userInfo.hasAuth;
+  const [isLogging, setIsLogging] = useState(false);
 	const message = useContext(GlobalMessageContext);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();

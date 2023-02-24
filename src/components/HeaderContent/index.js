@@ -1,6 +1,6 @@
 import styles from "./index.module.less";
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Avatar, Space, Dropdown, message } from "antd";
@@ -26,24 +26,25 @@ const items = [
 ];
 
 function HeaderContent() {
-	const userInfo = useSelector((state) => state.userInfo);
+  console.log('55555555555555');
+	// const userInfo = useSelector((state) => state.userInfo);
+  const { getState } = useStore();
+	const name = getState().userInfo.name;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
-  useEffect(() => {
-    
-  }, [userInfo.hasAuth])
 
 	const onClick = ({ key }) => {
 		switch (key) {
 			case "1":
-				console.log(userInfo);
+				// console.log(userInfo);
+        console.log(getState().userInfo.name);
 				break;
 			case "2":
+        localStorage.removeItem("userInfo");
+        navigate("/login", { replace: true });
 				dispatch(userLogout()).then((res) => {
 					console.log(res);
-					localStorage.removeItem("userInfo");
-					navigate("/login", { replace: true });
+					
 				});
 				break;
 			default:
@@ -61,7 +62,7 @@ function HeaderContent() {
 			>
 				<div className={user_info_warpper}>
 					<Avatar className={user_avatar} icon={<UserOutlined />} size="small" />
-					<span className={user_name}>{userInfo.name}</span>
+					<span className={user_name}>{name}</span>
 				</div>
 			</Dropdown>
 		</div>

@@ -1,6 +1,6 @@
 import styles from './App.module.less';
 import React, { Suspense, useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { message } from 'antd';
 import defaultRoute from './config/defaultRoute';
@@ -20,7 +20,9 @@ function getRootRouteChildren(routes) {
 
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
-  let authRoute = useSelector((state) => state.userInfo.authRoute);
+  // let authRoute = useSelector((state) => state.userInfo.authRoute);
+  const { getState } = useStore();
+	let authRoute = getState().userInfo.authRoute;
 
   // 初次先加载localStorage中的路由
   if (!authRoute.length) {
@@ -29,6 +31,10 @@ function App() {
       authRoute = userInfo.authRoute;
     }
   }
+  useEffect(() => {
+    console.log(8888888888);
+  }, [authRoute])
+  
   const routerCfg = defaultRoute.appendRoute(authRoute);
   const router = createBrowserRouter(routerCfg);
   const menu = convertToMenu(getRootRouteChildren(routerCfg));

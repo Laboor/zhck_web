@@ -31,16 +31,13 @@ function getUserToken(userInfo) {
 
 function RequireAuth(props) {
 	const message = useContext(GlobalMessageContext);
-	// const hasAuth = useSelector((state) => state.userInfo.hasAuth);
-  const { getState } = useStore();
-  const hasAuth = getState().userInfo.hasAuth;
+	const { getState } = useStore();
+	const hasAuth = getState().userInfo.hasAuth;
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  
 
 	useEffect(() => {
-    console.log(hasAuth);
 		if (hasAuth) return;
 		// 异步路由权限校验
 		axios
