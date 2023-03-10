@@ -1,7 +1,7 @@
 import styles from "./index.module.less";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Avatar, Space, Dropdown, message } from "antd";
 import { userLogout } from "@/store/modules/userInfo";
@@ -26,8 +26,6 @@ const items = [
 ];
 
 function HeaderContent() {
-  console.log('55555555555555');
-	// const userInfo = useSelector((state) => state.userInfo);
   const { getState } = useStore();
 	const name = getState().userInfo.name;
 	const dispatch = useDispatch();
@@ -36,16 +34,12 @@ function HeaderContent() {
 	const onClick = ({ key }) => {
 		switch (key) {
 			case "1":
-				// console.log(userInfo);
         console.log(getState().userInfo.name);
 				break;
 			case "2":
         localStorage.removeItem("userInfo");
-        navigate("/login", { replace: true });
-				dispatch(userLogout()).then((res) => {
-					console.log(res);
-					
-				});
+				navigate("/login", { replace: true });
+				dispatch(userLogout());
 				break;
 			default:
 				break;

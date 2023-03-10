@@ -1,7 +1,7 @@
 import styles from "./index.module.less";
 import gznxLogo from "@/assets/img/gzrc_logo.png";
 import { useState, useEffect, useContext } from "react";
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "@/store/modules/userInfo";
 import { Button, Checkbox, Form, Input } from "antd";
@@ -11,28 +11,34 @@ import { GlobalMessageContext } from "@/App";
 const { loginPage, sysTitle, logo, loginForm, forgetPwd } = styles;
 
 function Login() {
-  const { getState } = useStore();
-	const hasAuth = getState().userInfo.hasAuth;
-  const [isLogging, setIsLogging] = useState(false);
+	const [loginStatus, setLoginStatus] = useState("none");
+	const [isLogging, setIsLogging] = useState(false);
 	const message = useContext(GlobalMessageContext);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (hasAuth) {
+		if (loginStatus === "success") {
 			navigate("/", { replace: true });
+		} else if (loginStatus === "fail") {
+			message.open({
+				type: "error",
+				content: "登录失败，账号或密码错误！",
+			});
 		}
-    if (hasAuth === false) {
-      message.open({
-        type: "error",
-        content: "登录失败，账号或密码错误！",
-      });
-    }
-	}, [hasAuth, message, navigate]);
+	}, [loginStatus, message, navigate]);
 
 	const onLogin = () => {
 		setIsLogging(true);
-		dispatch(userLogin()).then(() => setIsLogging(false));
+		dispatch(userLogin()).then((res) => {
+			console.log(res);
+			if (res.meta.requestStatus === "fulfilled") {
+				setLoginStatus("success");
+			} else if (res.meta.requestStatus === "rejected") {
+				setLoginStatus("fail");
+			}
+			setIsLogging(false);
+		});
 	};
 
 	const onFinish = (values) => {

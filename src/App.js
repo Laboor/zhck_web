@@ -20,9 +20,7 @@ function getRootRouteChildren(routes) {
 
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
-  // let authRoute = useSelector((state) => state.userInfo.authRoute);
-  const { getState } = useStore();
-	let authRoute = getState().userInfo.authRoute;
+  let authRoute = useSelector((state) => state.userInfo.authRoute);
 
   // 初次先加载localStorage中的路由
   if (!authRoute.length) {
@@ -31,9 +29,6 @@ function App() {
       authRoute = userInfo.authRoute;
     }
   }
-  useEffect(() => {
-    console.log(8888888888);
-  }, [authRoute])
   
   const routerCfg = defaultRoute.appendRoute(authRoute);
   const router = createBrowserRouter(routerCfg);

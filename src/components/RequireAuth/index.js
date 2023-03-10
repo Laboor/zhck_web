@@ -1,7 +1,7 @@
 import styles from "./index.module.less";
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { updateUserInfo, clearUserInfo } from "@/store/modules/userInfo";
 import { Spin } from "antd";
 import axios from "@/axios";
